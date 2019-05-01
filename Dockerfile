@@ -1,6 +1,4 @@
-FROM alpine:latest
-
-RUN apk --update add nginx
+FROM nginx:latest
 
 COPY src /usr/share/nginx/html
 
