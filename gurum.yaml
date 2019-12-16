@@ -1,21 +1,24 @@
 project:
   name: game
   source:
-    provider: github
+    provider: github/cfn
     repo: kalleeh/2048
-  type: shared-lb
+  type: ecs-fargate
 environments:
   - name: dev
     config:
       HealthCheckPath: '/'
       DesiredCount: '1'
-      DockerImage: 'alexwhen/docker-2048:latest'
     env_vars:
       environment: dev
   - name: prod
     config:
       HealthCheckPath: '/'
       DesiredCount: '1'
-      DockerImage: 'alexwhen/docker-2048:latest'
     env_vars:
       environment: prod
+services:
+  - name: mys3bucket
+    type: s3
+    config:
+      ServiceBindings: 'gurum-game-dev,gurum-game-prod'
